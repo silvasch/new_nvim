@@ -1,12 +1,12 @@
 return {
 	load_opts = function(opts)
-		for k, v in pairs(opts) do
-			vim.opt[k] = v
+		for name, value in pairs(opts) do
+			vim.opt[name] = value
 		end
 	end,
-	load_gs = function(g)
-		for k, v in pairs(g) do
-			vim.g[k] = v
+	load_gs = function(gs)
+		for name, value in pairs(gs) do
+			vim.g[name] = value
 		end
 	end,
 }

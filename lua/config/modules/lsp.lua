@@ -1,15 +1,7 @@
 return {
-    lsp = {
-        mappings = {
-            n = {
-                l = {
-                    name = "LSP",
-                    r = {
-                        vim.lsp.buf.rename,
-                        "Rename",
-                    },
-                },
-            },
-        },
-    },
+	opts = {
+		tabstop = 4,
+		shiftwidth = 4,
+		expandtab = true,
+	},
 }
