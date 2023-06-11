@@ -11,6 +11,14 @@ function flatten(input)
         end
     end
 
+    for _, v in ipairs(input) do
+        if type(v) == "table" then
+            table.insert(out, flatten(v))
+        else
+            table.insert(out, v)
+        end
+    end
+
     return out
 end
 

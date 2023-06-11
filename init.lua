@@ -49,6 +49,7 @@ end
 local opts = {}
 local gs = {}
 local plugins = {}
+local has_plugins = false
 
 
 for _, module_name in ipairs(modules) do
@@ -56,18 +57,28 @@ for _, module_name in ipairs(modules) do
 
 	table.insert(opts, module_options.opts)
 	table.insert(gs, module_options.gs)
-	table.insert(plugins, module_options.plugins)
+ 	if module_options.has_plugins then
+	    table.insert(plugins, module_options.plugins)
+        has_plugins = true
+    end
 end
 
 opts = utils.flatten(opts)
 gs = utils.flatten(gs)
-print(vim.inspect(plugins))
 plugins = utils.flatten(plugins)
 
 local opts_helpers = require("core.opts")
 opts_helpers.load_opts(opts)
 opts_helpers.load_gs(gs)
 
-local plugins_helper = require("core.plugins")
-plugins_helper.load_plugins(plugins)
+print(vim.inspect(plugins))
+local has_plugins = false
+for _, _ in ipairs(plugins) do
+    has_plugins = true
+end
+
+if has_plugins then
+    local plugins_helper = require("core.plugins")
+    plugins_helper.load_plugins(plugins)
+end
 
