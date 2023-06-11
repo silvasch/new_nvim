@@ -1,3 +1,5 @@
+local flatten = require("utils.flatten")
+
 local config = require("config")
 local modules = config.modules
 
@@ -13,27 +15,19 @@ function load_module(module_name)
 			local module_options = load_module(dependency)
 
 			if not (module_options.opts == nil) then
-				for name, value in pairs(module_options.opts) do
-					opts[name] = value
-				end
+                table.insert(opts, module_options.opts)
 			end
 			if not (module_options.gs == nil) then
-				for name, value in pairs(module_options.gs) do
-					gs[name] = value
-				end
+                table.insert(gs, module_options.gs)
 			end
 		end
 	end
 
 	if not (module.opts == nil) then
-		for name, value in pairs(module.opts) do
-			opts[name] = value
-		end
+        table.insert(opts, module.opts)
 	end
 	if not (module.gs == nil) then
-		for name, value in pairs(module.gs) do
-			gs[name] = value
-		end
+        table.insert(gs, module.gs)
 	end
 
 	return {
@@ -51,16 +45,15 @@ for _, module_name in ipairs(modules) do
 	local module_options = load_module(module_name)
 
 	if not (module_options.opts == nil) then
-		for name, value in pairs(module_options.opts) do
-			opts[name] = value
-		end
-	end
+	    table.insert(opts, module_options.opts)
+    end
 	if not (module_options.gs == nil) then
-		for name, value in pairs(module_options.gs) do
-			gs[name] = value
-		end
+	    table.insert(gs, module_options.gs)
 	end
 end
+
+opts = flatten(opts)
+gs = flatten(gs)
 
 local opts_helpers = require("core.opts")
 opts_helpers.load_opts(opts)
